@@ -2,14 +2,19 @@ import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt
 
+#crear una imagen 500x500 en 3 canales
 img = np.zeros((500,500,3), np.uint8)
 
+#dibujar una linea de esquina a esquina
 cv.line(img,(0,0),(500,500),(0,0,255),5)
 
+#dibujar un rectangulo
 cv.rectangle(img,(100,200),(400,300),(0,255,0),5)
 
+#dibujar un criculo relleno
 cv.circle(img,(250,250), 50, (255,0,0), -1)
 
+#escribir en la imagen
 font = cv.FONT_HERSHEY_PLAIN
 img = cv.putText(img,'Albert',(100,199), font, 6, (255,255,255), 2, cv.LINE_AA)
 
@@ -21,6 +26,7 @@ imgGray
 
 cv.imwrite("gray_scale.png", imgGray)
 
+#ajustar el tamaño
 imgResize = cv.resize(img, (0,0), fx=2, fy=2)
 imgResize
 
@@ -33,10 +39,12 @@ imgRotate
 
 plt.imsave("rotate.png", imgRotate)
 
+#rotar en 30 grados
 rotatedmatrix30 = cv.getRotationMatrix2D((250,250), 30, 1)
 imgRotate30 = cv.warpAffine(img, rotatedmatrix30, (500,500))
 imgRotate30
 
+#cambiar la perspectiva
 height, width = img.shape[:2]
 pts1 = np.float32([[0, 0], [width, 0], [0, height], [width, height]])
 pts2 = np.float32([[50, 50], [width-50, 0], [0, height], [width, height-50]])
@@ -47,6 +55,7 @@ imgOutput
 
 plt.imsave("perspective.png", imgOutput)
 
+#mascara de transparencia
 imgMask = img.copy()
 imgMask = cv.cvtColor(imgMask, cv.COLOR_BGR2BGRA)
 mask = np.zeros((500, 500), dtype=np.uint8)
